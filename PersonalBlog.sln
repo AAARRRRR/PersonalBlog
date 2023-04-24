@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalBlog", "PersonalBlog\PersonalBlog.csproj", "{FDAE4730-ECD0-4090-871D-6582BFA12F0D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalBlog.test", "PersonalBlog.test\PersonalBlog.test.csproj", "{18F31389-D2EA-41B9-AF39-F3C154819BD4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FDAE4730-ECD0-4090-871D-6582BFA12F0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDAE4730-ECD0-4090-871D-6582BFA12F0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDAE4730-ECD0-4090-871D-6582BFA12F0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDAE4730-ECD0-4090-871D-6582BFA12F0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18F31389-D2EA-41B9-AF39-F3C154819BD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18F31389-D2EA-41B9-AF39-F3C154819BD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18F31389-D2EA-41B9-AF39-F3C154819BD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18F31389-D2EA-41B9-AF39-F3C154819BD4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

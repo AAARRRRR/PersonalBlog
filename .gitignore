@@ -1,0 +1,5 @@
+PersonalBlog/obj/
+PersonalBlog/bin/
+PersonalBlog.test/obj/
+PersonalBlog.test/bin/
+.idea/
