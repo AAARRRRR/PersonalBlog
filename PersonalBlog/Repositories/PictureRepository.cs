@@ -10,9 +10,9 @@ public class PictureRepository : RepositoryBase<Picture, BlogDbContext>, IPictur
     {
     }
 
-    public List<string> GetPictures(int albumId)
+    public List<Picture> GetPictures(int albumId)
     {
-        return All().Where(x => x.AlbumId == albumId).Select(x => x.PictureRoute).ToList();
+        return All().Where(x => x.AlbumId == albumId).ToList();
     }
 
     public List<Picture> GetDisplayPictures(List<int> displayPictureIds)

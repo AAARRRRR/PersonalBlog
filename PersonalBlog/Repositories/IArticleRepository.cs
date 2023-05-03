@@ -6,9 +6,9 @@ public interface IArticleRepository
 {
     public List<string?> GetCategories();
 
-    public List<Article> GetArticlesByCategory(List<string> categories);
+    public List<Article> GetArticlesByCategories(List<string> categories);
 
     public List<Article> GetArticlesByKeywords(List<string> keywords);
 
-    public List<Article> GetDisplayPictures(List<int> displayArticleIds);
+    public List<Article> GetDisplayArticles(List<int> displayArticleIds);
 }

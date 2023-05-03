@@ -10,8 +10,8 @@ public class AlbumRepository : RepositoryBase<Album,BlogDbContext>, IAlbumReposi
     {
     }
 
-    public List<string> GetAlbums()
+    public List<Album> GetAlbums()
     {
-        return All().Select(x => x.Name).Distinct().ToList();
+        return All().Distinct().ToList();
     }
 }

@@ -15,7 +15,7 @@ public class ArticleRepository : RepositoryBase<Article,BlogDbContext>, IArticle
         return All().Select(x => x.Category).Distinct().ToList();
     }
 
-    public List<Article> GetArticlesByCategory(List<string> categories)
+    public List<Article> GetArticlesByCategories(List<string> categories)
     {
         var results = new List<Article>();
         categories.ForEach(x => results.AddRange(All().Where(y => y.Category == x).ToList()));
@@ -29,7 +29,7 @@ public class ArticleRepository : RepositoryBase<Article,BlogDbContext>, IArticle
         return results;
     }
 
-    public List<Article> GetDisplayPictures(List<int> displayArticleIds)
+    public List<Article> GetDisplayArticles(List<int> displayArticleIds)
     {
         var results = new List<Article>();
         displayArticleIds.ForEach(x => results.Add(Get(x)));
