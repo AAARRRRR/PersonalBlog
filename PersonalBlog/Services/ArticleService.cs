@@ -5,29 +5,29 @@ namespace PersonalBlog.Services;
 
 public class ArticleService : IArticleService
 {
-    protected IArticleRepository _ArticleRepository;
+    private IArticleRepository _ArticleRepository;
 
     public ArticleService(IArticleRepository articleRepository)
     {
         _ArticleRepository = articleRepository;
     }
-    public List<string?> GetAllCategories()
+    public List<string?>? GetAllCategories()
     {
-        return _ArticleRepository.GetCategories();
+        return _ArticleRepository.GetCategories().Order().ToList();
     }
 
-    public List<Article> GetAllArticlesByCategories(List<string> categories)
+    public List<Article>? GetAllArticlesByCategories(List<string> categories)
     {
-        return _ArticleRepository.GetArticlesByCategories(categories);
+        return _ArticleRepository.GetArticlesByCategories(categories).OrderByDescending(x => x.UpdatedDate).ToList();
     }
 
-    public List<Article> GetAllArticlesByKeywords(List<string> keywords)
+    public List<Article>? GetAllArticlesByKeywords(List<string> keywords)
     {
-        return _ArticleRepository.GetArticlesByKeywords(keywords);
+        return _ArticleRepository.GetArticlesByKeywords(keywords).OrderByDescending(x => x.UpdatedDate).ToList();
     }
 
-    public List<Article> GetDisplayArticles(List<int> displayArticleIds)
+    public List<Article>? GetDisplayArticles()
     {
-        return _ArticleRepository.GetDisplayArticles(displayArticleIds);
+        return _ArticleRepository.GetDisplayArticles().OrderByDescending(x => x.UpdatedDate).ToList();
     }
 }

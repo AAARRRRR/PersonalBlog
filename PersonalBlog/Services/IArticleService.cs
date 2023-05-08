@@ -4,12 +4,12 @@ namespace PersonalBlog.Services;
 
 public interface IArticleService
 {
-    public List<string?> GetAllCategories();
+    public List<string?>? GetAllCategories();
 
-    public List<Article> GetAllArticlesByCategories(List<string> categories);
+    public List<Article>? GetAllArticlesByCategories(List<string> categories);
 
-    public List<Article> GetAllArticlesByKeywords(List<string> keywords);
+    public List<Article>? GetAllArticlesByKeywords(List<string> keywords);
 
-    public List<Article> GetDisplayArticles(List<int> displayArticleIds);
+    public List<Article>? GetDisplayArticles();
     
 }

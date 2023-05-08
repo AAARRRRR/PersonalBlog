@@ -1,8 +1,9 @@
 using PersonalBlog.Data;
 using PersonalBlog.Models;
 using PersonalBlog.Repositories;
+using PersonalBlog.Repositorys;
 
-namespace PersonalBlog.Repositorys;
+namespace PersonalBlog.Repositories;
 
 public class CommentRepository : RepositoryBase<Comment,BlogDbContext>, ICommentRepository
 {
@@ -15,10 +16,8 @@ public class CommentRepository : RepositoryBase<Comment,BlogDbContext>, IComment
         return Add(comment);
     }
 
-    public List<Comment> GetDisplayComments(List<int> displayCommentIds)
+    public List<Comment>? GetDisplayComments()
     {
-        var results = new List<Comment>();
-        displayCommentIds.ForEach(x => results.Add(Get(x)));
-        return results;
+        return All().Where(x => x.IsDisplay).ToList();
     }
 }

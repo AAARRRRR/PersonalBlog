@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Mvc;
+
 namespace PersonalBlog.Controllers;
 
-public class AritclePageController
+public class AritclePageController : Controller
 {
     
 }

@@ -4,5 +4,5 @@ namespace PersonalBlog.Repositories;
 
 public interface IAlbumRepository
 {
-    public List<Album> GetAlbums();
+    public List<Album>? GetAlbums();
 }

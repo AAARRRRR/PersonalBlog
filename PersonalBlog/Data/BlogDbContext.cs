@@ -31,7 +31,12 @@ public class BlogDbContext : DbContext
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer(connectionString).LogTo(_logStream.WriteLine).EnableDetailedErrors();
+        optionsBuilder.UseSqlServer(connectionString = "Data Source=127.0.0.1,1433;" +
+                                                       "Initial Catalog=master;" +
+                                                       "User Id=sa;" +
+                                                       "Password=Pass@word;" + 
+                                                       "TrustServerCertificate=True;" +
+                                                       "MultiSubnetFailover=True;").LogTo(_logStream.WriteLine).EnableDetailedErrors().EnableSensitiveDataLogging();
     }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)

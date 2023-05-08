@@ -6,20 +6,20 @@ namespace PersonalBlog.Services;
 
 public class CommentService : ICommentService
 {
-    protected ICommentRepository _CommentRepository;
+    private ICommentRepository _commentRepository;
     
     public CommentService(ICommentRepository commentRepository)
     {
-        _CommentRepository = commentRepository;
+        _commentRepository = commentRepository;
     }
-    public List<Comment> GetDisplayComments(List<int> displayCommentIds)
+    public List<Comment>? GetDisplayComments()
     {
-        return _CommentRepository.GetDisplayComments(displayCommentIds);
+        return _commentRepository.GetDisplayComments().OrderByDescending(x => x.CreatedDate).ToList();
     }
     
     public void AddComment(Comment comment)
     {
-        var addedComment = _CommentRepository.AddComment(comment);
+        var addedComment = _commentRepository.AddComment(comment);
         if (addedComment == null) throw new CommentInvalidException("Comment is Invalid");
     }
 }

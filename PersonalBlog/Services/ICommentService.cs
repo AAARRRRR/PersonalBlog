@@ -4,6 +4,6 @@ namespace PersonalBlog.Services;
 
 public interface ICommentService
 {
-    public List<Comment> GetDisplayComments(List<int> displayCommentIds);
+    public List<Comment>? GetDisplayComments();
     public void AddComment(Comment comment);
 }

@@ -10,15 +10,18 @@ public class PictureRepository : RepositoryBase<Picture, BlogDbContext>, IPictur
     {
     }
 
-    public List<Picture> GetPictures(int albumId)
+    public List<Picture>? GetPictures(int albumId)
     {
         return All().Where(x => x.AlbumId == albumId).ToList();
     }
-
-    public List<Picture> GetDisplayPictures(List<int> displayPictureIds)
+    
+    public Picture? GetCoverPicture(int albumId)
     {
-        var results = new List<Picture>();
-        displayPictureIds.ForEach(x => results.Add(Get(x)));
-        return results;
+        return Get(albumId);
+    }
+    
+    public List<Picture>? GetDisplayPictures()
+    {
+        return All().Where(x => x.IsDisplay).ToList();
     }
 }

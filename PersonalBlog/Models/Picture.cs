@@ -7,7 +7,9 @@ public class Picture
     public int AlbumId { get; set; }
     public string? Name { get; set; }
     public string? Description { get; set; }
+    public bool IsDisplay { get; set; }
     public DateTime CreatedDate { get; set; }
     public DateTime UpdatedDate { get; set; }
-    public Album Album { get; set; }
+    public virtual Album Album { get; set; }
+    
 }

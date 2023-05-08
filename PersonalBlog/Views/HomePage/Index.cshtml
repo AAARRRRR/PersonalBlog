@@ -1,8 +1,40 @@
-﻿@{
+﻿@model PersonalBlog.Models.HomePageViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<h1 class="display-4">Welcome</h1>
+<h2>DisplayPictures</h2>
+<div class = multi-images>
+    @foreach (var picture in Model.DisplayPictures)
+    {
+        <img class="image" src=@picture.PictureRoute alt="Display Image">
+    }
 </div>
+
+<h2>DisplayArticles</h2>
+<div class = displayArticleList>
+    @foreach (var article in Model.DisplayArticles)
+    {
+    <div class = article>
+        <h3>@article.Title</h3>
+        <body>@article.Content</body>
+    </div>
+    }
+</div>
+<h2>DisplayComments</h2>
+    @foreach (var comment in Model.DisplayComments)
+    {
+            <div class = comment>
+                <h4>@comment.Name</h4>
+                <body>@comment.Content</body>
+            </div>
+    }
+<style>
+    .multi-images {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+</style>

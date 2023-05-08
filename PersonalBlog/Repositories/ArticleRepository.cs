@@ -10,29 +10,27 @@ public class ArticleRepository : RepositoryBase<Article,BlogDbContext>, IArticle
     {
     }
 
-    public List<string?> GetCategories()
+    public List<string?>? GetCategories()
     {
         return All().Select(x => x.Category).Distinct().ToList();
     }
 
-    public List<Article> GetArticlesByCategories(List<string> categories)
+    public List<Article>? GetArticlesByCategories(List<string> categories)
     {
         var results = new List<Article>();
         categories.ForEach(x => results.AddRange(All().Where(y => y.Category == x).ToList()));
         return results;
     }
 
-    public List<Article> GetArticlesByKeywords(List<string> keywords)
+    public List<Article>? GetArticlesByKeywords(List<string> keywords)
     {
         var results = new List<Article>();
         keywords.ForEach(x => results.AddRange(All().Where(y => y.Content.Contains(x) | y.Title.Contains(x))));
         return results;
     }
 
-    public List<Article> GetDisplayArticles(List<int> displayArticleIds)
+    public List<Article>? GetDisplayArticles()
     {
-        var results = new List<Article>();
-        displayArticleIds.ForEach(x => results.Add(Get(x)));
-        return results;
+        return All().Where(x => x.IsDisplay).ToList();
     }
 }
