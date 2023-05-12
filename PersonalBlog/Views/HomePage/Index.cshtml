@@ -3,33 +3,60 @@
     ViewData["Title"] = "Home Page";
 }
 
-<h1 class="display-4">Welcome</h1>
-<h2>DisplayPictures</h2>
-<div class = multi-images>
+<h2>图片</h2>
+<div class = "multi-images">
     @foreach (var picture in Model.DisplayPictures)
     {
-        <img class="image" src=@picture.PictureRoute alt="Display Image">
+        <div class="image-box">
+            <img class = "image" src=@picture.PictureRoute alt="Display Image" />
+        </div>
     }
 </div>
 
-<h2>DisplayArticles</h2>
-<div class = displayArticleList>
+<h2>文章</h2>
+<div class = "displayArticleList">
     @foreach (var article in Model.DisplayArticles)
     {
-    <div class = article>
-        <h3>@article.Title</h3>
-        <body>@article.Content</body>
+    <div class = "article">
+        <h4>@article.Title</h4>
+        <body class = "multiline-ellipsis">@article.Content</body>
     </div>
     }
 </div>
-<h2>DisplayComments</h2>
-    @foreach (var comment in Model.DisplayComments)
-    {
-            <div class = comment>
+
+<div class = "comment">
+    <form asp-action="AddComment" method="Post" target="frameName">
+        <h2>Comments</h2>
+        <div>
+            <div class="comment-info">
+                <label for="Name">Name:</label>
+                <input name="Name" value="" required>
+                <label for="Contact">Contact:</label>
+                <input name="Contact" value="">
+            </div>
+            <div>
+                <label for="Content">Content:</label>
+                <textarea class = "comment-box" name="Content" value="" required></textarea>
+            </div>
+        </div>
+        <div>
+            <label>&nbsp;</label>
+            <input type="submit" value="Submit" class="submit"/>
+        </div>
+    </form>
+
+    <h3>评论</h3>
+    <div>
+        @foreach (var comment in Model.DisplayComments)
+        {
+            <div class=comment>
                 <h4>@comment.Name</h4>
                 <body>@comment.Content</body>
             </div>
-    }
+        }
+    </div>
+</div>
+
 <style>
     .multi-images {
         display: flex;
@@ -37,4 +64,45 @@
         justify-content: center;
         align-items: center;
     }
+    
+    .image-box {
+        margin: 12px;
+        width: 200px;
+        height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    .image {
+        display: block;
+        min-width: 100%;
+        height: 100%;
+    }
+    
+    .displayArticleList {
+        margin: 20px 10px
+    }
+    
+    .article { 
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 5;
+      overflow: hidden;
+      margin: 0 20px;
+      }
+      
+    .comment-info {
+        display: inline;
+    }
+    
+    .comment-box {
+        display: flex;
+        width: 100%;
+        height: 100%;
+    }
+
 </style>
+
+<iframe src="" name="frameName"></iframe>

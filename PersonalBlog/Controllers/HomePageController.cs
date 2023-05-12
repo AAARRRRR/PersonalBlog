@@ -19,7 +19,7 @@ public class HomePageController : Controller
         _pictureService = pictureService;
         _commentService = commentService;
     }
-
+    
     public IActionResult Index()
     {
         var displayPictures = _pictureService.GetDisplayPictures();
@@ -28,6 +28,15 @@ public class HomePageController : Controller
         var homepageViewModel = new HomePageViewModel{
             DisplayPictures = displayPictures, DisplayArticles = displayArticles, DisplayComments = displayComments};
         return View(homepageViewModel);
+    }
+    
+
+    [HttpPost]
+    public IActionResult AddComment([FromForm]Comment comment)
+    {
+        comment.CreatedDate = DateTime.Now;
+        _commentService.AddComment(comment);
+        return Ok();
     }
 
     public IActionResult Privacy()

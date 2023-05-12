@@ -3,3 +3,4 @@ PersonalBlog/bin/
 PersonalBlog.test/obj/
 PersonalBlog.test/bin/
 .idea/
+.DS_Store
