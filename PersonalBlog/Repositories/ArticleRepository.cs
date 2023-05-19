@@ -1,4 +1,6 @@
+using System.Text.RegularExpressions;
 using PersonalBlog.Data;
+using PersonalBlog.Exceptions;
 using PersonalBlog.Models;
 using PersonalBlog.Repositorys;
 
@@ -31,6 +33,23 @@ public class ArticleRepository : RepositoryBase<Article,BlogDbContext>, IArticle
 
     public List<Article>? GetDisplayArticles()
     {
-        return All().Where(x => x.IsDisplay).ToList();
+        var articles = All().Where(x => x.IsDisplay).ToList();
+        articles.ForEach(x =>
+            {
+                if (x.Summary == null) AddArticleSummaryIfNotExist(x);
+            });
+        return articles;
+    }
+
+    private void AddArticleSummaryIfNotExist(Article? article)
+    {
+        if (article == null) throw new ArticleNullException("Article is null");
+        if (article.Summary == null)
+        {
+            var sentences = Regex.Split(article.Content, @"(?<=[.。])");
+            var firstTwoSentences = new string[Math.Min(sentences.Length, 2)];
+            Array.Copy(sentences, firstTwoSentences, firstTwoSentences.Length);
+            article.Summary = firstTwoSentences[0] + firstTwoSentences[1];
+        }
     }
 }

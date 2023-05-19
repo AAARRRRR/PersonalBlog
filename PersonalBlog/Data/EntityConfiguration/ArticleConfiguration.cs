@@ -10,6 +10,7 @@ public class ArticleConfiguration : IEntityTypeConfiguration<Article>
     {
         builder.HasKey(a => a.Id);
         builder.Property(a => a.Title).IsRequired();
+        builder.Property("Summary");
         builder.Property("Content").IsRequired();
         builder.Property("CreatedDate").IsRequired();
         builder.Property("UpdatedDate").IsRequired();
