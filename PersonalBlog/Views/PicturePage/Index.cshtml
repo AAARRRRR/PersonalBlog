@@ -1,0 +1,71 @@
+@model AlbumPageViewModel
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{ var site = Configuration.GetSection("Kestrel")["EndPoints:Https:Url"]; }
+
+<div class="albums">
+    @foreach (var albumPicturePair in Model.AlbumMap)
+    {
+        <ul class="albumBlock">
+            <li class="coverImage">
+                <img class="image" src=@albumPicturePair.Value.PictureRoute alt="Cover Image" referrerpolicy="no-referrer"/>
+            </li>
+            <li class="albumName">
+                <a href = "@site/album/@albumPicturePair.Key.Id">@albumPicturePair.Key.Name</a>
+            </li>
+        </ul>
+    }
+</div>
+
+<style>
+    .albums {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .albumBlock {
+        margin: 12px;
+        width: 200px;
+        height: 230px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        list-style: none;
+    }
+    
+    .coverImage {
+    display: flex;
+    list-style: none;
+    width: 200px;
+    height: 200px;
+    }
+    
+    .coverImage .image {
+        display: block;
+        min-width: 100%;
+        height: 100%;   
+    }
+    
+    .albumName {
+    display: flex;
+    list-style: none;
+    width: 100%;
+    }
+    
+</style>
+
+@* <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"> *@
+@* </script> *@
+@* *@
+@* <script> *@
+@*     $("a").click(function(){ *@
+@*         alert('a'); *@
+@*     }) *@
+@* </script> *@
+
+
+
