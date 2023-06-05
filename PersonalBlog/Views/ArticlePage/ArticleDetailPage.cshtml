@@ -1,0 +1,18 @@
+@model Article
+@Html.Partial("/Views/Partial/_SearchBar.cshtml", new KeywordForm())
+
+<article>
+    <h2>@Model.Title</h2>
+    <div class = "articleInformation">
+        <h4>@Model.Category</h4>
+        <h4>@Model.UpdatedDate</h4>
+    </div>
+    <body class = "articleBody">@Model.Content</body>
+</article>
+
+<style>
+    .articleInformation {
+    display: flex;
+    justify-content: space-between;
+    }
+</style>

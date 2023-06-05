@@ -11,12 +11,17 @@ public class ArticleService : IArticleService
     {
         _ArticleRepository = articleRepository;
     }
-    public List<string?>? GetAllCategories()
+
+    public List<Article>? GetAllArticles()
+    {
+        return _ArticleRepository.GetAllArticles().OrderByDescending(x => x.UpdatedDate).ToList();
+    }
+    public List<string?> GetAllCategories()
     {
         return _ArticleRepository.GetCategories().Order().ToList();
     }
 
-    public List<Article>? GetAllArticlesByCategories(List<string> categories)
+    public List<Article>? GetAllArticlesByCategories(List<string?> categories)
     {
         return _ArticleRepository.GetArticlesByCategories(categories).OrderByDescending(x => x.UpdatedDate).ToList();
     }
@@ -29,5 +34,10 @@ public class ArticleService : IArticleService
     public List<Article>? GetDisplayArticles()
     {
         return _ArticleRepository.GetDisplayArticles().OrderByDescending(x => x.UpdatedDate).ToList();
+    }
+
+    public Article? GetArticle(int articleId)
+    {
+        return _ArticleRepository.GetArticle(articleId);
     }
 }
