@@ -1,0 +1,11 @@
+@model KeywordForm
+
+<div class="searchBar">
+    @using (Html.BeginForm("ArticlesByKeywords", "ArticlePage", FormMethod.Post))
+    {
+        <form>
+            @Html.TextBoxFor(m => m.key, new {placeholder = "Search..."})
+            <input type="submit" value="搜索" class="submit"/>
+        </form>
+    }
+</div>
