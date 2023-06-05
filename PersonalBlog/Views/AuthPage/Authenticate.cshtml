@@ -1,0 +1,6 @@
+@model ArticlePageViewModel
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{ var site = Configuration.GetSection("Kestrel")["EndPoints:Https:Url"]; }
+
+<button><a href="@site/picture/upload">编辑图片</a></button>
