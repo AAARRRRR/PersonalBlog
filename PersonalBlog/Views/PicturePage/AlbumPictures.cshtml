@@ -1,0 +1,66 @@
+@model PicturePageViewModel
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{ var site = Configuration.GetSection("Kestrel")["EndPoints:Https:Url"]; }
+
+<div class="pictures">
+    @foreach (var picture in Model.Pictures)
+    {
+        <ul class="pictureBlock">
+            <li class="picture">
+                <img class="image" src=/@picture.PictureRoute alt="Image" referrerpolicy="no-referrer"/>
+            </li>
+            <li class="pictureName">
+                <h4 class = "name">@picture.Name</h4>
+            </li>
+        </ul>
+    }
+</div>
+
+<style>
+    .pictures {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .pictureBlock {
+        margin: 12px;
+        padding: 0px;
+        width: 200px;
+        height: 230px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        list-style: none;
+    }
+    
+    .picture {
+    display: flex;
+    list-style: none;
+    width: 200px;
+    height: 200px;
+    }
+    
+    .picture .image {
+        display: block;
+        min-width: 100%;
+        height: 100%;   
+    }
+    
+    .pictureName {
+    display: flex;
+    list-style: none;
+    width: 100%;
+    }
+    
+    .name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    }
+    
+</style>

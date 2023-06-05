@@ -16,7 +16,7 @@ public class PictureService : IPictureService
 
     public List<Album> GetAllAlbums()
     {
-        return _AlbumRepository.GetAlbums().Order().ToList();
+        return _AlbumRepository.GetAlbums().ToList();
     }
 
     public Picture? GetCoverPicture(int albumId)
@@ -34,6 +34,4 @@ public class PictureService : IPictureService
         return _PictureRepository.GetDisplayPictures().OrderByDescending(x => x.UpdatedDate).ToList();
     }
     
-    //TODO：查资料看搜索方法
-
 }
