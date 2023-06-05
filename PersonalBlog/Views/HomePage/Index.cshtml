@@ -1,10 +1,14 @@
-﻿@model PersonalBlog.Models.HomePageViewModel
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{ var site = Configuration.GetSection("Kestrel")["EndPoints:Https:Url"]; }
+
+@model PersonalBlog.Models.HomePageViewModel
 @{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="displayImages">
-    <h2>图片</h2>
+    <h2><a href="@site/albums">图片</a></h2>
     <div class="images">
         @foreach (var picture in Model.DisplayPictures)
         {
@@ -17,7 +21,7 @@
 
 
 <div class="displayArticles">
-    <h2>文章</h2>
+    <h2><a href="@site/articles">文章</a></h2>
     @foreach (var article in Model.DisplayArticles)
     {
         <article class="articleBlock">
@@ -30,7 +34,8 @@
 
 <div class="addAndDisplayComments">
     <h2>评论</h2>
-    <form asp-action="AddComment" method="Post" target="StopRedirecting">
+    // Todo:改为刷新网页
+    <form asp-action="AddComment" method="Post">
         <div class=addComment>
             <div class="commentInfo">
                 <label for="Name">Name:</label>
@@ -106,5 +111,3 @@
         height: 100px;
     }
 </style>
-
-<iframe src="" name="StopRedirecting"></iframe>
