@@ -11,32 +11,26 @@ public class BlogDbContext : DbContext
     public DbSet<Comment> Comments { get; set; }
     public DbSet<Picture> Pictures { get; set; }
     
-    private string connectionString { get; set; }
-
+    // public IConfiguration _Configuration { get; }
+    
     private readonly StreamWriter _logStream = new StreamWriter("../DbContext.log", append: true);
 
     public BlogDbContext()
     {
-        connectionString = "Data Source=127.0.0.1,1433;" +
-                           "Initial Catalog=master;" +
-                           "User Id=sa;" +
-                           "Password=Pass@word;" + 
-                           "TrustServerCertificate=True;" +
-                           "MultiSubnetFailover=True;";
     }
+    
+    // public BlogDbContext(IConfiguration configuration)
+    // {
+    //     _Configuration = configuration;
+    // }
     
     public BlogDbContext(DbContextOptions<BlogDbContext> options) : base(options)
     {
     }
-    
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer(connectionString = "Data Source=127.0.0.1,1433;" +
-                                                       "Initial Catalog=master;" +
-                                                       "User Id=sa;" +
-                                                       "Password=Pass@word;" + 
-                                                       "TrustServerCertificate=True;" +
-                                                       "MultiSubnetFailover=True;").LogTo(_logStream.WriteLine).EnableDetailedErrors().EnableSensitiveDataLogging();
+        // optionsBuilder.UseSqlServer(_Configuration.GetValue<string>("ConnectionStrings:DefaultConnection")).LogTo(_logStream.WriteLine).EnableDetailedErrors().EnableSensitiveDataLogging();
     }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
