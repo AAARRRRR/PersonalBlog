@@ -1,6 +1,4 @@
-using System.Configuration;
 using System.Security.Claims;
-using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -31,7 +29,8 @@ builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<BlogDbContext>(
-    options => options.UseSqlServer(configuration.GetValue<string>("ConnectionStrings:DefaultConnection")));
+    options => options.UseSqlServer(configuration.GetValue<string>("ConnectionStrings:DefaultConnection"))
+        .LogTo(new StreamWriter("../DbContext.log", append: true).WriteLine).EnableDetailedErrors().EnableSensitiveDataLogging());
 builder.Services.AddDbContext<UsersContext>(
     options => options.UseSqlServer(configuration.GetValue<string>("ConnectionStrings:DefaultConnection")));
 builder.Services.AddIdentityCore<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false).AddRoles<IdentityRole>()
