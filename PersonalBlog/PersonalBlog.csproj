@@ -14,26 +14,26 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="LinqKit.Core" Version="1.2.4" />
+      <PackageReference Include="LINQPad" Version="5.46.0" />
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.5" />
+      <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
+      <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.5" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0-preview.3.23174.2">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
       <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.0-preview.3.23174.2" />
+      <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0-preview.4.23259.5" />
+      <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.5.0" />
+      <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.5.0" />
+      <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.5.0" />
+      <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0-preview.4.23259.5" />
+      <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.30.1" />
     </ItemGroup>
 
     <ItemGroup>
-      <None Include="wwwroot\Images\Form.jpg" />
-      <None Include="wwwroot\Images\Form2.jpg" />
-      <None Include="wwwroot\Images\waiting.jpg" />
-      <None Include="wwwroot\Images\夜华一.jpg" />
-      <None Include="wwwroot\Images\夜华三.jpg" />
-      <None Include="wwwroot\Images\夜华二.png" />
-      <None Include="wwwroot\Images\夜华夜华夜华夜华夜华夜华.jpg" />
-      <None Include="wwwroot\Images\好戏登场.jpg" />
-      <None Include="wwwroot\Images\建筑.jpg" />
-      <None Include="wwwroot\Images\日照金山.jpg" />
-      <None Include="wwwroot\Images\落华.jpg" />
-      <None Include="wwwroot\Images\落华.png" />
+      <Folder Include="MyStaticFiles" />
     </ItemGroup>
 
 </Project>
