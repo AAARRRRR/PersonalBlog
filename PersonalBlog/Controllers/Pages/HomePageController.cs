@@ -8,6 +8,7 @@ using PersonalBlog.Services;
 namespace PersonalBlog.Controllers.Pages;
 
 [AllowAnonymous]
+[Route("home")]
 public class HomePageController : Controller
 {
     private readonly ILogger<HomePageController> _logger;
@@ -51,11 +52,13 @@ public class HomePageController : Controller
         return Redirect(siteUrl+"/homepage");
     }
     
+    [Route("privacy")]
     public IActionResult Privacy()
     {
         return View();
     }
 
+    [Route("Error")]
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
