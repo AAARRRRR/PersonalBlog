@@ -6,5 +6,4 @@ namespace PersonalBlog.Controllers;
 [AllowAnonymous]
 public class AboutPageController : Controller
 {
-    
 }

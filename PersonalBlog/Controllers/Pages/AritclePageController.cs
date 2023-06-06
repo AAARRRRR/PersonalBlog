@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Http.Extensions;
+using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using PersonalBlog.Models;
 using PersonalBlog.Services;
@@ -58,8 +58,8 @@ public class ArticlePageController : Controller
             var article = await _articleService.GetArticle(Id);
             return View(article);
         }
-        //Todo:处理异常情况
-        return View();
+        
+        return View("Error");
     }
     
 

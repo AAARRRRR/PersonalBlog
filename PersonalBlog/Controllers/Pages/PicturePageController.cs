@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
@@ -40,7 +41,6 @@ public class PicturePageController : Controller
             var picturePageModel = new PicturePageViewModel{Pictures = await _pictureService.GetAllPicturesByAlbumId(Id)};
             return View(picturePageModel);
         }
-        //Todo:处理异常情况
-        return View();
+        return View("Error");
     }
 }
