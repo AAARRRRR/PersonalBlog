@@ -47,8 +47,8 @@ public class HomePageController : Controller
     {
         comment.CreatedDate = DateTime.Now;
         _commentService.AddComment(comment);
-        var homePageUrl = _configuration.GetSection("Kestrel")["EndPoints:Https:Url"];
-        return Redirect(homePageUrl+"/homepage");
+        var siteUrl = _configuration.GetSection("Kestrel")["EndPoints:Https:Url"];
+        return Redirect(siteUrl+"/homepage");
     }
     
     public IActionResult Privacy()

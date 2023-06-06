@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Mvc.RazorPages;
+
 namespace PersonalBlog.Models;
 
-public class HomePageViewModel
+public class HomePageViewModel : PageModel
 {
     public List<Picture>? DisplayPictures;
     public List<Article>? DisplayArticles;

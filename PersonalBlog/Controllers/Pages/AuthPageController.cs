@@ -1,10 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using PersonalBlog.Auth;
 using PersonalBlog.Authorization;
-using Index = System.Index;
 
 namespace PersonalBlog.Controllers.Pages;
 
@@ -89,29 +87,4 @@ public class AuthPageController : Controller
             new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
         return View();
     }
-
-    //     if (ModelState.IsValid)
-    //     {
-    //         var signIn = await _signInManager.PasswordSignInAsync(userAuth.Email, userAuth.Password, false, false);
-    //
-    //         if (signIn.Succeeded)
-    //         {
-    //             var user = await _userManager.FindByEmailAsync(userAuth.Email);
-    //             var token = _tokenService.CreateToken(user);
-    //             
-    //             await _userManager.UpdateAsync(user);
-    //
-    //             Response.Cookies.Append("X-Access-Token", token, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
-    //             Response.Cookies.Append("X-Email", user.Email, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
-    //
-    //             return Ok();
-    //         }
-    //         else
-    //         {
-    //             return BadRequest(new { signIn.IsLockedOut, signIn.IsNotAllowed, signIn.RequiresTwoFactor });
-    //         }
-    //     }
-    //     else
-    //         return BadRequest(ModelState);
-    // }
 }
