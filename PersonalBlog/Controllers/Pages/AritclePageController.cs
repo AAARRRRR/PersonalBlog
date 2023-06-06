@@ -1,11 +1,11 @@
-using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PersonalBlog.Models;
 using PersonalBlog.Services;
 
 namespace PersonalBlog.Controllers.Pages;
 
-
+[AllowAnonymous]
 public class ArticlePageController : Controller
 {
     private readonly IArticleService _articleService;
