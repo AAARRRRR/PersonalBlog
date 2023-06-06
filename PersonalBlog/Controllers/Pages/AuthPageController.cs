@@ -79,8 +79,7 @@ public class AuthPageController : Controller
 
         var accessToken = _tokenService.CreateToken(userInDb);
         await _context.SaveChangesAsync();
-
-        //Todo:有效期内显示登陆信息，过时退出登陆，更新token，cookie
+        
         Response.Cookies.Append("X-Access-Token", accessToken,
             new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
         Response.Cookies.Append("X-UserName", userInDb.UserName,
