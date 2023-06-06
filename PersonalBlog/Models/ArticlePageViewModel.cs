@@ -2,8 +2,8 @@ namespace PersonalBlog.Models;
 
 public class ArticlePageViewModel
 {
-    public List<Article>? AllArticles;
+    public List<Article> AllArticles;
 
-    public List<string>? AllCategories;
+    public List<string?> AllCategories;
     
 }

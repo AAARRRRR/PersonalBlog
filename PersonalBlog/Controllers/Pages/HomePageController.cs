@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using PersonalBlog.Models;
 using PersonalBlog.Services;
 
-namespace PersonalBlog.Controllers;
+namespace PersonalBlog.Controllers.Pages;
 
 [AllowAnonymous]
 public class HomePageController : Controller
@@ -32,11 +32,11 @@ public class HomePageController : Controller
 
     }
     
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        var displayPictures = _pictureService.GetDisplayPictures();
-        var displayArticles = _articleService.GetDisplayArticles();
-        var displayComments = _commentService.GetDisplayComments();
+        var displayPictures = await _pictureService.GetDisplayPictures();
+        var displayArticles = await _articleService.GetDisplayArticles();
+        var displayComments = await _commentService.GetDisplayComments();
         var homepageViewModel = new HomePageViewModel{
             DisplayPictures = displayPictures, DisplayArticles = displayArticles, DisplayComments = displayComments};
         return View(homepageViewModel);

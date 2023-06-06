@@ -1,3 +1,4 @@
+using System.Net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -7,7 +8,7 @@ namespace PersonalBlog.Controllers.Pages;
 
 public class EditPicturePageController : Controller
 {
-    public IPictureService _pictureService;
+    private readonly IPictureService _pictureService;
     
     public EditPicturePageController(IPictureService pictureService)
     {
@@ -20,10 +21,5 @@ public class EditPicturePageController : Controller
     {
         return View();
     }
-
-    [HttpPost]
-    public IActionResult OnPostUploadAsync()
-    {
-        return Ok();
-    }
+    
 }

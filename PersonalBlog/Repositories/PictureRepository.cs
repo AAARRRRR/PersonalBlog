@@ -1,6 +1,7 @@
+using LinqKit;
 using PersonalBlog.Data;
+using PersonalBlog.Infrastruture;
 using PersonalBlog.Models;
-using PersonalBlog.Repositorys;
 
 namespace PersonalBlog.Repositories;
 
@@ -10,18 +11,22 @@ public class PictureRepository : RepositoryBase<Picture, BlogDbContext>, IPictur
     {
     }
 
-    public List<Picture>? GetPictures(int albumId)
+    public async Task<List<Picture>> GetPictures(int albumId)
     {
-        return All().Where(x => x.AlbumId == albumId).ToList();
+        var predicate = PredicateBuilder.False<Picture>();
+        var picturePredicate = predicate.Or(x => x.AlbumId == albumId);
+        return await Where(picturePredicate);
     }
     
-    public Picture? GetCoverPicture(int albumId)
+    public async Task<Picture?> GetCoverPicture(int albumId)
     {
-        return Get(albumId);
+        return await Get(albumId);
     }
     
-    public List<Picture>? GetDisplayPictures()
+    public async Task<List<Picture>> GetDisplayPictures()
     {
-        return All().Where(x => x.IsDisplay).ToList();
+        var predicate = PredicateBuilder.False<Picture>();
+        var picturePredicate = predicate.Or(x => x.IsDisplay);
+        return await Where(picturePredicate);
     }
 }

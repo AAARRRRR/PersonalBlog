@@ -4,8 +4,8 @@ namespace PersonalBlog.Repositories;
 
 public interface IPictureRepository
 {
-    public List<Picture>? GetPictures(int albumId);
-    public Picture? GetCoverPicture(int albumId);
-    public List<Picture>? GetDisplayPictures();
+    public Task<List<Picture>> GetPictures(int albumId);
+    public Task<Picture?> GetCoverPicture(int albumId);
+    public Task<List<Picture>> GetDisplayPictures();
     
 }

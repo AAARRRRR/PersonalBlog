@@ -1,7 +1,7 @@
+using LinqKit;
 using PersonalBlog.Data;
+using PersonalBlog.Infrastruture;
 using PersonalBlog.Models;
-using PersonalBlog.Repositories;
-using PersonalBlog.Repositorys;
 
 namespace PersonalBlog.Repositories;
 
@@ -11,13 +11,16 @@ public class CommentRepository : RepositoryBase<Comment,BlogDbContext>, IComment
     {
     }
 
-    public Comment AddComment(Comment comment)
+    public async Task<Comment> AddComment(Comment comment)
     {
-        return Add(comment);
+        return await Add(comment);
     }
 
-    public List<Comment>? GetDisplayComments()
+    public async Task<List<Comment>> GetDisplayComments()
     {
-        return All().Where(x => x.IsDisplay).ToList();
+        var predicate = PredicateBuilder.False<Comment>();
+        var displayCommentPredicate = predicate.Or(comment => comment.IsDisplay);
+        var displayComments = await Where(displayCommentPredicate);
+        return displayComments;
     }
 }

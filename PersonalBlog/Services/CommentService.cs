@@ -6,20 +6,21 @@ namespace PersonalBlog.Services;
 
 public class CommentService : ICommentService
 {
-    private ICommentRepository _commentRepository;
+    private readonly ICommentRepository _commentRepository;
     
     public CommentService(ICommentRepository commentRepository)
     {
         _commentRepository = commentRepository;
     }
-    public List<Comment>? GetDisplayComments()
+    public async Task<List<Comment>> GetDisplayComments()
     {
-        return _commentRepository.GetDisplayComments().OrderByDescending(x => x.CreatedDate).ToList();
+        var comments = await _commentRepository.GetDisplayComments();
+        return comments.OrderByDescending(x => x.CreatedDate).ToList();
     }
     
-    public void AddComment(Comment comment)
+    public async Task AddComment(Comment comment)
     {
-        var addedComment = _commentRepository.AddComment(comment);
+        var addedComment = await _commentRepository.AddComment(comment);
         if (addedComment == null) throw new CommentInvalidException("Comment is Invalid");
     }
 }

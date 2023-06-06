@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using PersonalBlog.Models;
 using PersonalBlog.Services;
 
-namespace PersonalBlog.Controllers;
+namespace PersonalBlog.Controllers.Pages;
 
 [AllowAnonymous]
 public class PicturePageController : Controller
@@ -17,14 +17,14 @@ public class PicturePageController : Controller
     }
     
     [Route("albums")]
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        var albums = _pictureService.GetAllAlbums();
+        var albums = await _pictureService.GetAllAlbums();
         var albumMap = new Dictionary<Album, Picture>();
         foreach (var album in albums)
         {
-            var coverPicture = _pictureService.GetCoverPicture(album.CoverPictureId);
-            albumMap.Add(album,coverPicture);
+            var coverPicture = await _pictureService.GetCoverPicture(album.CoverPictureId);
+            if (coverPicture != null) albumMap.Add(album, coverPicture);
         }
         var albumPageViewModel = new AlbumPageViewModel{AlbumMap = albumMap};
         
@@ -32,13 +32,12 @@ public class PicturePageController : Controller
     }
     
     [Route("album/{albumId}")]
-    public IActionResult AlbumPictures(string albumId)
+    public async Task<IActionResult> AlbumPictures(string albumId)
     {
         var urlStrings = HttpContext.Request.GetDisplayUrl().Split("/");
-        int Id;
-        if (int.TryParse(urlStrings[urlStrings.Length - 1], out Id))
+        if (int.TryParse(urlStrings[urlStrings.Length - 1], out var Id))
         {
-            var picturePageModel = new PicturePageViewModel{Pictures = _pictureService.GetAllPicturesByAlbumId(Id)};
+            var picturePageModel = new PicturePageViewModel{Pictures = await _pictureService.GetAllPicturesByAlbumId(Id)};
             return View(picturePageModel);
         }
         //Todo:处理异常情况

@@ -1,89 +1,91 @@
 using System.Text.RegularExpressions;
+using LinqKit;
 using PersonalBlog.Data;
 using PersonalBlog.Exceptions;
+using PersonalBlog.Infrastruture;
 using PersonalBlog.Models;
-using PersonalBlog.Repositorys;
 
 namespace PersonalBlog.Repositories;
 
 public class ArticleRepository : RepositoryBase<Article,BlogDbContext>, IArticleRepository
 {
-    
+
     public ArticleRepository(BlogDbContext context) : base(context)
     {
     }
 
-    public List<Article> GetAllArticles()
+    public async Task<List<Article>> GetAllArticles()
     {
-        var articles = All();
-        articles.ForEach(x =>
-        {
-            if (x.Summary == null) AddArticleSummaryIfNotExist(x);
-        });
+        var articles = await All();
+        await AddArticleSummaryIfNotExist();
         return articles;
     }
 
-    public List<string?> GetCategories()
+    public async Task<List<string?>> GetCategories()
     {
-        return All().Select(x => x.Category).Distinct().ToList();
+        var allArticles = await All();
+        return allArticles.Select(x => x.Category).Distinct().ToList();
     }
 
-    public List<Article> GetArticlesByCategories(List<string> categories)
+    public async Task<List<Article>> GetArticlesByCategories(List<string?> categories)
     {
         var results = new List<Article>();
-        categories.ForEach(x => results.AddRange(All().Where(y => y.Category == x).ToList()));
-        results.ForEach(x =>
-        {
-            if (x.Summary == null) AddArticleSummaryIfNotExist(x);
-        });
-        return results;
-    }
+        var predicate = PredicateBuilder.False<Article>();
 
-    public List<Article> GetArticlesByKeywords(List<string> keywords)
-    {
-        var results = new List<Article>();
-
-        var allArticles = All();
-        
-        foreach (var article in allArticles)
+        foreach (var category in categories)
         {
-            foreach (var keyword in keywords)
-            {
-                if (article.Title.Contains(keyword) | article.Content.Contains(keyword))
-                {
-                    results.Add(article);
-                }
-            }
+            var keywordPredicate = predicate.Or(article => article.Category == category);
+            var partialResult = await Where(keywordPredicate);
+            results.AddRange(partialResult);
         }
 
-        results.ForEach(x =>
-        {
-            if (x.Summary == null) AddArticleSummaryIfNotExist(x);
-        });
+        await AddArticleSummaryIfNotExist();
+        
         return results;
     }
 
-    public List<Article> GetDisplayArticles()
+    public async Task<List<Article>> GetArticlesByKeywords(List<string> keywords)
     {
-        var articles = All().Where(x => x.IsDisplay).ToList();
-        articles.ForEach(x =>
-            {
-                if (x.Summary == null) AddArticleSummaryIfNotExist(x);
-            });
+        var results = new List<Article>();
+        var predicate = PredicateBuilder.False<Article>();
+        
+        foreach (var keyword in keywords)
+        {
+            var keywordPredicate = predicate.Or(article => article.Title.Contains(keyword) || article.Title.Contains(keyword));
+            var partialResult = await Where(keywordPredicate);
+            results.AddRange(partialResult);
+        }
+
+        await AddArticleSummaryIfNotExist();
+            
+        return results;
+    }
+
+    public async Task<List<Article>> GetDisplayArticles()
+    {
+        var predicate = PredicateBuilder.False<Article>();
+        var displayArticlePredicate = predicate.Or(article => article.IsDisplay);
+        var articles = await Where(displayArticlePredicate);
+        
+        await AddArticleSummaryIfNotExist();
+        
         return articles;
     }
 
-    public Article GetArticle(int articleId)
+    public async Task<Article?> GetArticle(int articleId)
     {
-        var article = Get(articleId);
+        var article = await Get(articleId);
         if (article == null) throw new ArticleNullException("Article is null");
         return article;
     }
     
-    private void AddArticleSummaryIfNotExist(Article? article)
+    private async Task AddArticleSummaryIfNotExist()
     {
-        if (article == null) throw new ArticleNullException("Article is null");
-        if (article.Summary == null)
+        var predicate = PredicateBuilder.False<Article>();
+        var ifSummaryExistPredicate = predicate.Or(article => article.Summary == null);
+        var articlesWithoutSummary = await Where(ifSummaryExistPredicate);
+
+        foreach (var article in articlesWithoutSummary)
         {
             var sentences = Regex.Split(article.Content, @"(?<=[.。])");
             var firstTwoSentences = new string[Math.Min(sentences.Length, 2)];
@@ -91,5 +93,4 @@ public class ArticleRepository : RepositoryBase<Article,BlogDbContext>, IArticle
             article.Summary = firstTwoSentences[0] + firstTwoSentences[1];
         }
     }
-    
 }

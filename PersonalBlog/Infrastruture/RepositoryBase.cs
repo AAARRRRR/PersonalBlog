@@ -1,40 +1,56 @@
+using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using PersonalBlog.Repositorys;
 
-namespace PersonalBlog.Repositorys;
+namespace PersonalBlog.Infrastruture;
 
 public abstract class RepositoryBase<T, TDbContext> : IRepository<T>
     where T: class
     where TDbContext : DbContext
 {
-    protected TDbContext _DbContext;
+    private readonly TDbContext _dbContext;
 
-
-    public RepositoryBase(TDbContext dbContext) 
+    protected RepositoryBase(TDbContext dbContext) 
     {
-        _DbContext = dbContext;
+        _dbContext = dbContext;
     }
     
-    public T Add(T entity)
+    //增
+    public Task<T> Add(T entity)
     {
-        var createdEntity = _DbContext.Add(entity).Entity;
-        _DbContext.SaveChanges();
-        return createdEntity;
+        var createdEntity = _dbContext.Add(entity).Entity;
+        _dbContext.SaveChanges();
+        return Task.FromResult(createdEntity);
+    }
+    
+    //删
+    public void Remove(T entity)
+    {
+        var deletedEntity = _dbContext.Remove(entity).Entity;
+        _dbContext.SaveChanges();
+    }
+    
+    //改
+    public Task<T> Update(T entity)
+    {
+        var updatedEntity = _dbContext.Update(entity).Entity;
+        _dbContext.SaveChanges();
+        return Task.FromResult(updatedEntity);
     }
 
-    public T? Get(int id)
+    //查
+    public Task<T?> Get(int id)
     {
-        return _DbContext.Find<T>(id);
+        return Task.FromResult(_dbContext.Find<T>(id));
+    }
+    
+    public Task<List<T>> All()
+    {
+        return Task.FromResult(_dbContext.Set<T>().AsNoTracking().ToList());
     }
 
-    public List<T> All()
+    public Task<List<T>> Where(Expression<Func<T, bool>> predicate)
     {
-        return _DbContext.Set<T>().AsNoTracking().ToList();
-    }
-
-    public T Update(T entity)
-    {
-        var updatedEntity = _DbContext.Update(entity).Entity;
-        _DbContext.SaveChanges();
-        return updatedEntity;
+        return _dbContext.Set<T>().Where(predicate).ToListAsync();
     }
 }

@@ -1,4 +1,5 @@
 using PersonalBlog.Data;
+using PersonalBlog.Infrastruture;
 using PersonalBlog.Models;
 using PersonalBlog.Repositorys;
 
@@ -10,8 +11,8 @@ public class AlbumRepository : RepositoryBase<Album,BlogDbContext>, IAlbumReposi
     {
     }
 
-    public List<Album>? GetAlbums()
+    public async Task<List<Album>> GetAlbums()
     {
-        return All().ToList();
+        return await All();
     }
 }

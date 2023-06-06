@@ -5,39 +5,44 @@ namespace PersonalBlog.Services;
 
 public class ArticleService : IArticleService
 {
-    private IArticleRepository _ArticleRepository;
+    private readonly IArticleRepository _articleRepository;
 
     public ArticleService(IArticleRepository articleRepository)
     {
-        _ArticleRepository = articleRepository;
+        _articleRepository = articleRepository;
     }
 
-    public List<Article>? GetAllArticles()
+    public async Task<List<Article>> GetAllArticles()
     {
-        return _ArticleRepository.GetAllArticles().OrderByDescending(x => x.UpdatedDate).ToList();
+        var allArticles = await _articleRepository.GetAllArticles();
+        return allArticles.OrderByDescending(x => x.UpdatedDate).ToList();
     }
-    public List<string?> GetAllCategories()
+    public async Task<List<string?>> GetAllCategories()
     {
-        return _ArticleRepository.GetCategories().Order().ToList();
-    }
-
-    public List<Article>? GetAllArticlesByCategories(List<string?> categories)
-    {
-        return _ArticleRepository.GetArticlesByCategories(categories).OrderByDescending(x => x.UpdatedDate).ToList();
+        var allCategories = await _articleRepository.GetCategories();
+        return allCategories;
     }
 
-    public List<Article>? GetAllArticlesByKeywords(List<string> keywords)
+    public async Task<List<Article>> GetAllArticlesByCategories(List<string?> categories)
     {
-        return _ArticleRepository.GetArticlesByKeywords(keywords).OrderByDescending(x => x.UpdatedDate).ToList();
+        var articles = await _articleRepository.GetArticlesByCategories(categories);
+        return articles.OrderByDescending(x => x.UpdatedDate).ToList();
     }
 
-    public List<Article>? GetDisplayArticles()
+    public async Task<List<Article>> GetAllArticlesByKeywords(List<string> keywords)
     {
-        return _ArticleRepository.GetDisplayArticles().OrderByDescending(x => x.UpdatedDate).ToList();
+        var articles = await _articleRepository.GetArticlesByKeywords(keywords);
+        return articles.OrderByDescending(x => x.UpdatedDate).ToList();
     }
 
-    public Article? GetArticle(int articleId)
+    public async Task<List<Article>> GetDisplayArticles()
     {
-        return _ArticleRepository.GetArticle(articleId);
+        var articles = await _articleRepository.GetDisplayArticles();
+        return articles.OrderByDescending(x => x.UpdatedDate).ToList();
+    }
+
+    public async Task<Article?> GetArticle(int articleId)
+    {
+        return await _articleRepository.GetArticle(articleId);
     }
 }

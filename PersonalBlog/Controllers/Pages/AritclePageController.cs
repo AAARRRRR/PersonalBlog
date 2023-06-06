@@ -16,10 +16,10 @@ public class ArticlePageController : Controller
     }
 
     [Route("articles")]
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        var allCategories = _articleService.GetAllCategories();
-        var allArticles = _articleService.GetAllArticles();
+        var allCategories = await _articleService.GetAllCategories();
+        var allArticles = await _articleService.GetAllArticles();
         var articlePageViewModel = new ArticlePageViewModel
             { AllCategories = allCategories, AllArticles = allArticles};
         
@@ -27,12 +27,11 @@ public class ArticlePageController : Controller
     }
 
     [Route("category/{category}")]
-    public IActionResult ArticlesByCategory(string category)
+    public async Task<IActionResult> ArticlesByCategory(string category)
     {
-        var categories = new List<string?>();
-        categories.Add(category);
-        var articles = _articleService.GetAllArticlesByCategories(categories);
-        var allCategories = _articleService.GetAllCategories();
+        var categories = new List<string?> { category };
+        var articles = await _articleService.GetAllArticlesByCategories(categories);
+        var allCategories = await _articleService.GetAllCategories();
         var articlePageViewModel = new ArticlePageViewModel
             { AllCategories = allCategories, AllArticles = articles};
         
@@ -40,12 +39,11 @@ public class ArticlePageController : Controller
     }
     
     [HttpPost]
-    [Route("keywords/{keyword}")]
-    public IActionResult ArticlesByKeywords(KeywordForm model)
+    public async Task<IActionResult> ArticlesByKeywords(KeywordForm keywordForm)
     {
-        var keywords = model.key.Split(@"/\s+/").ToList();
-        var articles = _articleService.GetAllArticlesByKeywords(keywords);
-        var allCategories = _articleService.GetAllCategories();
+        var keywords = keywordForm.key.Split(@"/\s+/").ToList();
+        var articles = await _articleService.GetAllArticlesByKeywords(keywords);
+        var allCategories = await _articleService.GetAllCategories();
         var articlePageViewModel = new ArticlePageViewModel
             { AllCategories = allCategories, AllArticles = articles};
         
@@ -53,13 +51,11 @@ public class ArticlePageController : Controller
     }
     
     [Route("article/{articleId}")]
-    public IActionResult ArticleDetailPage(string articleId)
+    public async Task<IActionResult> ArticleDetailPage(string articleId)
     {
-        var urlStrings = HttpContext.Request.GetDisplayUrl().Split("/");
-        int Id;
-        if (int.TryParse(urlStrings[urlStrings.Length - 1], out Id))
+        if (int.TryParse(articleId, out var Id))
         {
-            var article = _articleService.GetArticle(Id);
+            var article = await _articleService.GetArticle(Id);
             return View(article);
         }
         //Todo:处理异常情况

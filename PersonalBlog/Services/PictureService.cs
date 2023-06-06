@@ -5,33 +5,35 @@ namespace PersonalBlog.Services;
 
 public class PictureService : IPictureService
 {
-    private IPictureRepository _PictureRepository;
-    private IAlbumRepository _AlbumRepository;
+    private readonly IPictureRepository _pictureRepository;
+    private readonly IAlbumRepository _albumRepository;
 
     public PictureService(IPictureRepository pictureRepository, IAlbumRepository albumRepository)
     {
-        _PictureRepository = pictureRepository;
-        _AlbumRepository = albumRepository;
+        _pictureRepository = pictureRepository;
+        _albumRepository = albumRepository;
     }
 
-    public List<Album> GetAllAlbums()
+    public async Task<List<Album>> GetAllAlbums()
     {
-        return _AlbumRepository.GetAlbums().ToList();
+        return await _albumRepository.GetAlbums();
     }
 
-    public Picture? GetCoverPicture(int albumId)
+    public async Task<Picture?> GetCoverPicture(int albumId)
     {
-        return _PictureRepository.GetCoverPicture(albumId);
+        return await _pictureRepository.GetCoverPicture(albumId);
     }
     
-    public List<Picture> GetAllPicturesByAlbumId(int albumId)
+    public async Task<List<Picture>> GetAllPicturesByAlbumId(int albumId)
     {
-        return _PictureRepository.GetPictures(albumId).OrderByDescending(x => x.UpdatedDate).ToList();
+        var pictures = await _pictureRepository.GetPictures(albumId);
+        return pictures.OrderByDescending(x => x.UpdatedDate).ToList();
     }
     
-    public List<Picture> GetDisplayPictures()
+    public async Task<List<Picture>> GetDisplayPictures()
     {
-        return _PictureRepository.GetDisplayPictures().OrderByDescending(x => x.UpdatedDate).ToList();
+        var pictures = await _pictureRepository.GetDisplayPictures();
+        return pictures.OrderByDescending(x => x.UpdatedDate).ToList();
     }
     
 }
