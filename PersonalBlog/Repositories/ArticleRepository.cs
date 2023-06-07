@@ -29,16 +29,14 @@ public class ArticleRepository : RepositoryBase<Article,BlogDbContext>, IArticle
 
     public async Task<List<Article>> GetArticlesByCategories(List<string?> categories)
     {
-        var results = new List<Article>();
         var predicate = PredicateBuilder.False<Article>();
 
         foreach (var category in categories)
         {
-            var keywordPredicate = predicate.Or(article => article.Category == category);
-            var partialResult = await Where(keywordPredicate);
-            results.AddRange(partialResult);
+            predicate = predicate.Or(article => article.Category == category);
         }
-
+        var results = await Where(predicate);
+        
         await AddArticleSummaryIfNotExist();
         
         return results;
@@ -89,7 +87,7 @@ public class ArticleRepository : RepositoryBase<Article,BlogDbContext>, IArticle
             var firstTwoSentences = new string[Math.Min(sentences.Length, 2)];
             Array.Copy(sentences, firstTwoSentences, firstTwoSentences.Length);
             article.Summary = firstTwoSentences[0] + firstTwoSentences[1];
-            Update(article);
+            await Update(article);
         }
     }
 }
