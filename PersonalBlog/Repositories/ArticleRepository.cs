@@ -53,10 +53,7 @@ public class ArticleRepository : RepositoryBase<Article,BlogDbContext>, IArticle
             predicate = predicate.Or(article => article.Title.Contains(keyword) || article.Content.Contains(keyword));
         }
         var results = await Where(predicate);
-        return results;
         
-        
-
         await AddArticleSummaryIfNotExist();
             
         return results;
