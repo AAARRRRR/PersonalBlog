@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PersonalBlog.Models;
@@ -41,7 +42,7 @@ public class ArticlePageController : Controller
     [HttpPost]
     public async Task<IActionResult> ArticlesByKeywords(KeywordForm keywordForm)
     {
-        var keywords = keywordForm.key.Split(@"/\s+/").ToList();
+        var keywords = Regex.Split(keywordForm.key, @"[\s\u3000]+").ToList();
         var articles = await _articleService.GetAllArticlesByKeywords(keywords);
         var allCategories = await _articleService.GetAllCategories();
         var articlePageViewModel = new ArticlePageViewModel

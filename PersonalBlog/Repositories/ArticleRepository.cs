@@ -46,15 +46,16 @@ public class ArticleRepository : RepositoryBase<Article,BlogDbContext>, IArticle
 
     public async Task<List<Article>> GetArticlesByKeywords(List<string> keywords)
     {
-        var results = new List<Article>();
         var predicate = PredicateBuilder.False<Article>();
         
         foreach (var keyword in keywords)
         {
-            var keywordPredicate = predicate.Or(article => article.Title.Contains(keyword) || article.Title.Contains(keyword));
-            var partialResult = await Where(keywordPredicate);
-            results.AddRange(partialResult);
+            predicate = predicate.Or(article => article.Title.Contains(keyword) || article.Content.Contains(keyword));
         }
+        var results = await Where(predicate);
+        return results;
+        
+        
 
         await AddArticleSummaryIfNotExist();
             
