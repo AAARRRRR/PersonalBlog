@@ -1,10 +1,29 @@
-<form asp-action="OnPostUpload" enctype="multipart/form-data" method="Post">
-    <div class="form-group">
-        <label class="control-label">Upload</label>
-        <input type="file" class="form-control" name="file" />
-    </div>
-
-    <div class="form-group">
-        <input type="submit" value="submit" class="btn btn-default" />
-    </div>
+@model BufferedSingleFileUploadDbModel
+<form asp-action="OnPostUpload" enctype="multipart/form-data" method="post">
+    <dl>
+        <dt>
+            <label asp-for="FileUpload.FormFile"></label>
+        </dt>
+        <dd>
+            <input asp-for="FileUpload.FormFile" type="file">
+        </dd>
+        <dt>
+            <label asp-for="FileUpload.Name">Name</label>
+        </dt>
+        <dd>
+            <input asp-for="FileUpload.Name" type="text">
+        </dd>
+        <dt>
+            <label asp-for="FileUpload.AlbumId">Album</label>
+        </dt>
+        <dd>
+            <select name="Album" id="album">
+                @foreach (var album in Model.Albums)
+                {
+                    <option value="@album.Id">@album.Name</option>
+                }
+            </select>
+        </dd>
+    </dl>
+    <input class="btn" type="submit" value="Upload">
 </form>

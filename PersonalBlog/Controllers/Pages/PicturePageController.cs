@@ -10,7 +10,7 @@ namespace PersonalBlog.Controllers.Pages;
 [AllowAnonymous]
 public class PicturePageController : Controller
 {
-    private IPictureService _pictureService;
+    private readonly IPictureService _pictureService;
 
     public PicturePageController(IPictureService pictureService)
     {
