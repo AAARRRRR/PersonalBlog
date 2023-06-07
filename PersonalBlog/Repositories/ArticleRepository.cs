@@ -9,7 +9,7 @@ namespace PersonalBlog.Repositories;
 
 public class ArticleRepository : RepositoryBase<Article,BlogDbContext>, IArticleRepository
 {
-
+    
     public ArticleRepository(BlogDbContext context) : base(context)
     {
     }
@@ -91,6 +91,7 @@ public class ArticleRepository : RepositoryBase<Article,BlogDbContext>, IArticle
             var firstTwoSentences = new string[Math.Min(sentences.Length, 2)];
             Array.Copy(sentences, firstTwoSentences, firstTwoSentences.Length);
             article.Summary = firstTwoSentences[0] + firstTwoSentences[1];
+            Update(article);
         }
     }
 }
