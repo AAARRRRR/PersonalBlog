@@ -16,4 +16,8 @@ Url：
 home页面：https://localhost:5000/home
 articles页面：https://localhost:5000/articles
 picture页面:https://localhost:5000/albums
+login页面：https://localhost:5000/login
+（仅限管理员进入： userEmail:jiaye.zhong@thoughtworks.com
+                password:Thoughtworks123!)
+
 
